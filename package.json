@@ -1,7 +1,7 @@
 {
   "name": "svelte-press",
   "version": "0.0.3",
-  "description": "",
+  "description": "Simple static site generator for Svelte",
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
@@ -10,10 +10,20 @@
     "type": "git",
     "url": "git+https://github.com/rkiel/npm-svelte-press.git"
   },
+  "bugs": {
+    "url": "https://github.com/rkiel/npm-svelte-press/issues"
+  },
+  "homepage": "https://github.com/rkiel/npm-svelte-press#readme",
   "bin": "./cli.js",
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
+  "keywords": [
+    "svelte",
+    "jamstack",
+    "static",
+    "site",
+    "generator"
+  ],
+  "author": "Robert Kiel",
+  "license": "MIT",
   "bugs": {
     "url": "https://github.com/rkiel/npm-svelte-press/issues"
   },
