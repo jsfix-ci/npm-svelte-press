@@ -1,6 +1,6 @@
 {
   "name": "svelte-press",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "Simple static site generator for Svelte",
   "main": "index.js",
   "scripts": {
@@ -23,9 +23,5 @@
     "generator"
   ],
   "author": "Robert Kiel",
-  "license": "MIT",
-  "bugs": {
-    "url": "https://github.com/rkiel/npm-svelte-press/issues"
-  },
-  "homepage": "https://github.com/rkiel/npm-svelte-press#readme"
+  "license": "MIT"
 }
