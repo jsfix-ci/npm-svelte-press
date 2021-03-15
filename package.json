@@ -10,6 +10,7 @@
     "type": "git",
     "url": "git+https://github.com/rkiel/npm-svelte-press.git"
   },
+  "bin": "./cli.js",
   "keywords": [],
   "author": "",
   "license": "ISC",

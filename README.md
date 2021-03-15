@@ -1,1 +1,1 @@
-# npm-svelte-press
+# svelte-press
