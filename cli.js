@@ -161,6 +161,9 @@ function indexPage(title, subPath, name) {
   ].join("\n");
 }
 
+// TBD: purge all the html files in public
+// TBD: purge all the directories in public
+
 //console.log("projectRoot", projectRoot);
 crawlFileSystem(
   ".", //projectRoot,

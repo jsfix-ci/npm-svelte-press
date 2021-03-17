@@ -24,10 +24,11 @@ Add a script to package.json
 },
 ```
 
-Create an index page
+Create some pages
 
 ```bash
 cp src/main.js src/index.js
+cp src/main.js src/about.js
 ```
 
 Generate the static site
@@ -47,3 +48,4 @@ View pages
 - [http://localhost:5000/](http://localhost:5000/)
 - [http://localhost:5000/index.html](http://localhost:5000/index.html)
 - [http://localhost:5000/main.html](http://localhost:5000/main.html)
+- [http://localhost:5000/about.html](http://localhost:5000/about.html)
