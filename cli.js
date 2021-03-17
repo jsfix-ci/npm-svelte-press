@@ -16,48 +16,47 @@ function caseInsensitive(a, b) {
 }
 
 function crawlFileSystem(rootPath, srcRoot, destRoot, subPath, callbacks) {
+  callbacks["enter"] &&
+    callbacks["enter"](rootPath, srcRoot, destRoot, subPath);
+
   const dirents = fs.readdirSync(path.join(rootPath, srcRoot, subPath), {
     withFileTypes: true,
   });
 
-  let names;
-
-  names = dirents
+  const dirNames = dirents
     .filter((y) => y.isDirectory())
     .map((y) => y.name)
     .sort(caseInsensitive);
-  names.forEach((name) => {
-    callbacks["enter"] &&
-      callbacks["enter"](rootPath, srcRoot, destRoot, path.join(subPath, name));
+  dirNames.forEach((dirName) => {
     crawlFileSystem(
       rootPath,
       srcRoot,
       destRoot,
-      path.join(subPath, name),
+      path.join(subPath, dirName),
       callbacks
     );
-    callbacks["exit"] &&
-      callbacks["exit"](rootPath, srcRoot, destRoot, path.join(subPath, name));
   });
 
-  names = dirents
+  const fileNames = dirents
     .filter((y) => y.isFile())
     .map((y) => y.name)
     .sort(caseInsensitive);
   const types = Object.keys(callbacks);
-  names.forEach((name) => {
+  fileNames.forEach((fileName) => {
     if (callbacks["file"]) {
-      callbacks["file"](rootPath, srcRoot, destRoot, subPath, null, name);
+      callbacks["file"](rootPath, srcRoot, destRoot, subPath, null, fileName);
     } else {
       types
         .filter((type) => type !== "enter")
         .filter((type) => type !== "exit")
-        .filter((type) => name.endsWith("." + type))
+        .filter((type) => fileName.endsWith("." + type))
         .forEach((type) =>
-          callbacks[type](rootPath, srcRoot, destRoot, subPath, type, name)
+          callbacks[type](rootPath, srcRoot, destRoot, subPath, type, fileName)
         );
     }
   });
+
+  callbacks["exit"] && callbacks["exit"](rootPath, srcRoot, destRoot, subPath);
 }
 
 function readFile(srcPath, destPath, transform) {
@@ -161,8 +160,30 @@ function indexPage(title, subPath, name) {
   ].join("\n");
 }
 
-// TBD: purge all the html files in public
-// TBD: purge all the directories in public
+function purgeFile(rootPath, srcRoot, destRoot, subPath, type, name) {
+  if (subPath.startsWith("build") || name.endsWith(".html")) {
+    console.log("rm", path.join(srcRoot, subPath, name));
+    fs.unlinkSync(path.join(srcRoot, subPath, name));
+  }
+}
+
+function purgeDir(rootPath, srcRoot, destRoot, subPath) {
+  if (path.join(srcRoot, subPath) !== srcRoot) {
+    console.log("rmdir", path.join(srcRoot, subPath));
+    fs.rmdirSync(path.join(srcRoot, subPath));
+  }
+}
+
+crawlFileSystem(
+  ".", //projectRoot,
+  "public",
+  "public", //path.join("public", "build"),
+  ".",
+  {
+    exit: purgeDir,
+    file: purgeFile,
+  }
+);
 
 //console.log("projectRoot", projectRoot);
 crawlFileSystem(
