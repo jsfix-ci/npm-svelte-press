@@ -1,88 +1,13 @@
 #!/usr/bin/env node
 
 const fs = require("fs");
-const readline = require("readline");
 const path = require("path");
-const { argv } = require("process");
 
 const { execSync } = require("child_process");
 
-//const projectRoot = path.join(__dirname, "..");
-
-function caseInsensitive(a, b) {
-  if (a.toLowerCase() < b.toLowerCase()) return -1;
-  if (a.toLowerCase() > b.toLowerCase()) return 1;
-  return 0;
-}
-
-function crawlFileSystem(rootPath, srcRoot, destRoot, subPath, callbacks) {
-  callbacks["enter"] &&
-    callbacks["enter"](rootPath, srcRoot, destRoot, subPath);
-
-  const dirents = fs.readdirSync(path.join(rootPath, srcRoot, subPath), {
-    withFileTypes: true,
-  });
-
-  const dirNames = dirents
-    .filter((y) => y.isDirectory())
-    .map((y) => y.name)
-    .sort(caseInsensitive);
-  dirNames.forEach((dirName) => {
-    crawlFileSystem(
-      rootPath,
-      srcRoot,
-      destRoot,
-      path.join(subPath, dirName),
-      callbacks
-    );
-  });
-
-  const fileNames = dirents
-    .filter((y) => y.isFile())
-    .map((y) => y.name)
-    .sort(caseInsensitive);
-  const types = Object.keys(callbacks);
-  fileNames.forEach((fileName) => {
-    if (callbacks["file"]) {
-      callbacks["file"](rootPath, srcRoot, destRoot, subPath, null, fileName);
-    } else {
-      types
-        .filter((type) => type !== "enter")
-        .filter((type) => type !== "exit")
-        .filter((type) => fileName.endsWith("." + type))
-        .forEach((type) =>
-          callbacks[type](rootPath, srcRoot, destRoot, subPath, type, fileName)
-        );
-    }
-  });
-
-  callbacks["exit"] && callbacks["exit"](rootPath, srcRoot, destRoot, subPath);
-}
-
-function readFile(srcPath, destPath, transform) {
-  const rollupConfig = fs.readFileSync(srcPath, {
-    encoding: "utf8",
-    flag: "r",
-  });
-  const lines = rollupConfig.split(/\r?\n/).map((x) => transform(x));
-  fs.writeFileSync(destPath, lines.join("\n"), {
-    encoding: "utf8",
-    flag: "w",
-  });
-  // const readFile = readline.createInterface({
-  //   input: fs.createReadStream(srcPath),
-  //   output: fs.createWriteStream(destPath),
-  //   terminal: false,
-  // });
-  //
-  // readFile.on("line", _transform).on("close", function () {
-  //   console.log(`Created "${this.output.path}"`);
-  // });
-  //
-  // function _transform(line) {
-  //   this.output.write(`${transform(line)}\n`);
-  // }
-}
+const crawlDirectory = require("./lib/crawlDirectory");
+const readFile = require("./lib/readFile");
+const indexPage = require("./lib/indexPage");
 
 function onJsFile(rootPath, srcRoot, destRoot, subPath, type, name) {
   readFile(
@@ -133,33 +58,6 @@ function tempRollup(srcRoot, destRoot, subPath, name) {
   };
 }
 
-function indexPage(title, subPath, name) {
-  return [
-    "<!DOCTYPE html>",
-    '<html lang="en">',
-    "<head>",
-    "	<meta charset='utf-8'>",
-    "	<meta name='viewport' content='width=device-width,initial-scale=1'>",
-    "",
-    `	<title>${title}</title>`,
-    "",
-    "	<link rel='icon' type='image/png' href='/favicon.png'>",
-    //    "	<link rel='stylesheet' href='/global.css'>",
-    `	<link rel='stylesheet' href='/${path.join(
-      "build",
-      subPath,
-      path.parse(name).name
-    )}.css'>`,
-    "",
-    `	<script defer src='/${path.join("build", subPath, name)}'></script>`,
-    "</head>",
-    "",
-    "<body>",
-    "</body>",
-    "</html>",
-  ].join("\n");
-}
-
 function purgeFile(rootPath, srcRoot, destRoot, subPath, type, name) {
   if (subPath.startsWith("build") || name.endsWith(".html")) {
     console.log("rm", path.join(srcRoot, subPath, name));
@@ -174,7 +72,7 @@ function purgeDir(rootPath, srcRoot, destRoot, subPath) {
   }
 }
 
-crawlFileSystem(
+crawlDirectory(
   ".", //projectRoot,
   "public",
   "public", //path.join("public", "build"),
@@ -186,7 +84,7 @@ crawlFileSystem(
 );
 
 //console.log("projectRoot", projectRoot);
-crawlFileSystem(
+crawlDirectory(
   ".", //projectRoot,
   "src",
   "public", //path.join("public", "build"),
