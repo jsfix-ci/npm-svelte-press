@@ -4,23 +4,14 @@ const { execSync } = require("child_process");
 
 const crawlDirectory = require("./lib/crawlDirectory");
 const indexPage = require("./lib/indexPage");
-const transformRollup = require("./lib/transformRollup");
+const rollup = require("./lib/rollup");
 const fileSystem = require("./lib/fileSystem");
 
 let lib;
 
 function onJsFile(rootPath, srcRoot, destRoot, subPath, type, name) {
-  fileSystem.copy(
-    path.join(rootPath, "rollup.config.js"),
-    path.join(rootPath, "temp.config.js"),
-    transformRollup(srcRoot, destRoot, subPath, name)
-  );
-  execSync("npm run build temp.config.js");
-  execSync("rm temp.config.js");
-  fileSystem.write(
-    path.join(destRoot, subPath, path.parse(name).name + ".html"),
-    indexPage(path.parse(name).name, subPath, name)
-  );
+  rollup.build(rootPath, srcRoot, destRoot, subPath, name);
+  indexPage.create(destRoot, subPath, name);
 }
 
 function onEnter(rootPath, srcRoot, destRoot, subPath) {

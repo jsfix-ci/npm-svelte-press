@@ -1,7 +1,7 @@
-const lib = require("../../lib/indexPage").lib;
+const lib = require("../../lib/indexPage");
 
 describe("indexPage", () => {
   it("should work", () => {
-    expect(Object.keys(lib.indexPage)).toEqual(["lib"]);
+    expect(Object.keys(lib)).toEqual(["_generate", "create"]);
   });
 }); // indexPage
