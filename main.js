@@ -1,4 +1,3 @@
-const fs = require("fs");
 const path = require("path");
 
 const { execSync } = require("child_process");
@@ -7,6 +6,7 @@ const crawlDirectory = require("./lib/crawlDirectory");
 const copyFile = require("./lib/copyFile");
 const indexPage = require("./lib/indexPage");
 const transformRollup = require("./lib/transformRollup");
+const fileSystem = require("./lib/fileSystem");
 
 let lib;
 
@@ -18,41 +18,26 @@ function onJsFile(rootPath, srcRoot, destRoot, subPath, type, name) {
   );
   execSync("npm run build temp.config.js");
   execSync("rm temp.config.js");
-  fs.writeFileSync(
+  fileSystem.write(
     path.join(destRoot, subPath, path.parse(name).name + ".html"),
-    indexPage(path.parse(name).name, subPath, name),
-    {
-      encoding: "utf8",
-      flag: "w",
-    }
+    indexPage(path.parse(name).name, subPath, name)
   );
 }
 
 function onEnter(rootPath, srcRoot, destRoot, subPath) {
-  let fullPath;
-  fullPath = path.join(rootPath, destRoot, subPath);
-  if (!fs.existsSync(fullPath)) {
-    console.log("mkdir", fullPath);
-    fs.mkdirSync(fullPath);
-  }
-  fullPath = path.join(rootPath, destRoot, "build", subPath);
-  if (!fs.existsSync(fullPath)) {
-    console.log("mkdir", fullPath);
-    fs.mkdirSync(fullPath);
-  }
+  fileSystem.mkdir(path.join(rootPath, destRoot, subPath));
+  fileSystem.mkdir(path.join(rootPath, destRoot, "build", subPath));
 }
 
 function purgeFile(rootPath, srcRoot, destRoot, subPath, type, name) {
   if (subPath.startsWith("build") || name.endsWith(".html")) {
-    console.log("rm", path.join(srcRoot, subPath, name));
-    fs.unlinkSync(path.join(srcRoot, subPath, name));
+    fileSystem.removeFile(path.join(srcRoot, subPath, name));
   }
 }
 
 function purgeDir(rootPath, srcRoot, destRoot, subPath) {
   if (path.join(srcRoot, subPath) !== srcRoot) {
-    console.log("rmdir", path.join(srcRoot, subPath));
-    fs.rmdirSync(path.join(srcRoot, subPath));
+    fileSystem.removeDir(path.join(srcRoot, subPath));
   }
 }
 
