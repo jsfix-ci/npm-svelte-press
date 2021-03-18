@@ -3,7 +3,6 @@ const path = require("path");
 const { execSync } = require("child_process");
 
 const crawlDirectory = require("./lib/crawlDirectory");
-const copyFile = require("./lib/copyFile");
 const indexPage = require("./lib/indexPage");
 const transformRollup = require("./lib/transformRollup");
 const fileSystem = require("./lib/fileSystem");
@@ -11,7 +10,7 @@ const fileSystem = require("./lib/fileSystem");
 let lib;
 
 function onJsFile(rootPath, srcRoot, destRoot, subPath, type, name) {
-  copyFile(
+  fileSystem.copy(
     path.join(rootPath, "rollup.config.js"),
     path.join(rootPath, "temp.config.js"),
     transformRollup(srcRoot, destRoot, subPath, name)
