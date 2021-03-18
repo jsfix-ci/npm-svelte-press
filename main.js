@@ -1,7 +1,5 @@
 const path = require("path");
 
-const { execSync } = require("child_process");
-
 const crawlDirectory = require("./lib/crawlDirectory");
 const indexPage = require("./lib/indexPage");
 const rollup = require("./lib/rollup");
