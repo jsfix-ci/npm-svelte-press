@@ -20,7 +20,7 @@ Add a script to package.json
 
 ```json
 "scripts": {
-  "press": "svelte-press"
+  "press-build": "press-build"
 },
 ```
 

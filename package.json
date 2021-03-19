@@ -4,6 +4,7 @@
   "description": "Simple static site generator for Svelte",
   "main": "index.js",
   "scripts": {
+    "build": "./cli/build.js",
     "test": "jasmine"
   },
   "repository": {
@@ -14,7 +15,10 @@
     "url": "https://github.com/rkiel/npm-svelte-press/issues"
   },
   "homepage": "https://github.com/rkiel/npm-svelte-press#readme",
-  "bin": "./cli.js",
+  "bin": {
+    "press-build": "./cli/build.js",
+    "press-page": "./cli/page.js"
+  },
   "keywords": [
     "svelte",
     "jamstack",
