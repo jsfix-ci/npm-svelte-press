@@ -5,6 +5,7 @@
   "main": "index.js",
   "scripts": {
     "build": "./cli/build.js",
+    "page": "./cli/page.js",
     "test": "jasmine"
   },
   "repository": {
@@ -30,5 +31,8 @@
   "license": "MIT",
   "devDependencies": {
     "jasmine": "^3.6.4"
+  },
+  "dependencies": {
+    "commander": "^7.1.0"
   }
 }
