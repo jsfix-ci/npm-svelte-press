@@ -52,7 +52,7 @@ Update Layout found in `_layouts/Layout.svelte`
 
 ```html
 <div>
-  <div>
+  <div class="nav">
     <a href="/">Index</a>
     <a href="/home.html">Home</a>
     <a href="/about.html">About</a>
@@ -63,6 +63,15 @@ Update Layout found in `_layouts/Layout.svelte`
   </div>
   <slot></slot>
 </div>
+
+<style>
+  .nav {
+    text-align: center;
+    padding: 1em;
+    max-width: 240px;
+    margin: 0 auto;
+  }
+</style>
 ```
 
 Generate the static site
