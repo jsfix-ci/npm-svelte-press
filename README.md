@@ -29,10 +29,12 @@ Create some pages
 
 ```bash
 npm run press-page -- -t Index
-npm run press-page -- -t About
-npm run press-page -- -p account -t Login
-npm run press-page -- -p account -t Signup
-npm run press-page -- -p account -t Reset
+npm run press-page -- -t Home -l Default
+npm run press-page -- -t About -l Default
+npm run press-page -- -t Contact -l Default
+npm run press-page -- -p account -t Login -l Account
+npm run press-page -- -p account -t Signup -l Account
+npm run press-page -- -p account -t Reset -l Account
 ```
 
 Generate the static site
