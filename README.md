@@ -35,31 +35,31 @@ npm run press-page -- -t Index
 Create some pages with a layout
 
 ```bash
-npm run press-page -- -t Home    -l Layout
-npm run press-page -- -t About   -l Layout
-npm run press-page -- -t Contact -l Layout
+npm run press-page -- -t Home         -l "Default Layout"
+npm run press-page -- -t "About Us"   -l "Default Layout"
+npm run press-page -- -t "Contact Us" -l "Default Layout"
 ```
 
 Create some pages in a directory
 
 ```bash
-npm run press-page -- -t Login   -l Layout -p account
-npm run press-page -- -t Signup  -l Layout -p account
-npm run press-page -- -t Reset   -l Layout -p account
+npm run press-page -- -t Login            -l "Default Layout" -p account
+npm run press-page -- -t Signup           -l "Default Layout" -p account
+npm run press-page -- -t "Reset Password" -l "Default Layout" -p account
 ```
 
-Update Layout found in `_layouts/Layout.svelte`
+Update DefaultLayout found in `_layouts/DefaultLayout.svelte`
 
 ```html
 <div>
   <div class="nav">
     <a href="/">Index</a>
     <a href="/home.html">Home</a>
-    <a href="/about.html">About</a>
-    <a href="/contact.html">Contact</a>
+    <a href="/about-us.html">About</a>
+    <a href="/contact-us.html">Contact</a>
     <a href="/account/login.html">Login</a>
     <a href="/account/signup.html">Signup</a>
-    <a href="/account/reset.html">Reset</a>
+    <a href="/account/reset-password.html">Reset</a>
   </div>
   <slot></slot>
 </div>
