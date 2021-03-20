@@ -42,7 +42,6 @@ Update Layout found in `_layouts/Layout.svelte`
 
 ```html
 <div>
-  <h1>I am layout Layout</h1>
   <div>
     <a href="/">Index</a>
     <a href="/home.html">Home</a>
