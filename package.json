@@ -33,6 +33,7 @@
     "jasmine": "^3.6.4"
   },
   "dependencies": {
-    "commander": "^7.1.0"
+    "commander": "^7.1.0",
+    "lodash": "^4.17.21"
   }
 }

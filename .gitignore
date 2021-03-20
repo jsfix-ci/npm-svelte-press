@@ -107,3 +107,4 @@ src/
 public/
 _layouts/
 rollup.config.js
+svelte-press.config.json
