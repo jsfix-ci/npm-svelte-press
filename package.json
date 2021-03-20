@@ -1,6 +1,6 @@
 {
   "name": "svelte-press",
-  "version": "0.0.13",
+  "version": "0.0.14",
   "description": "Simple static site generator for Svelte",
   "main": "index.js",
   "scripts": {
