@@ -21,7 +21,8 @@ Add a script to package.json
 ```json
 "scripts": {
   "press-build": "press-build",
-  "press-page": "press-page"
+  "press-page": "press-page",
+  "press-start": "npm run press-build && npm run start"
 },
 ```
 
@@ -29,12 +30,30 @@ Create some pages
 
 ```bash
 npm run press-page -- -t Index
-npm run press-page -- -t Home -l Default
-npm run press-page -- -t About -l Default
-npm run press-page -- -t Contact -l Default
-npm run press-page -- -p account -t Login -l Account
-npm run press-page -- -p account -t Signup -l Account
-npm run press-page -- -p account -t Reset -l Account
+npm run press-page -- -t Home    -l Layout
+npm run press-page -- -t About   -l Layout
+npm run press-page -- -t Contact -l Layout
+npm run press-page -- -t Login   -l Layout -p account
+npm run press-page -- -t Signup  -l Layout -p account
+npm run press-page -- -t Reset   -l Layout -p account
+```
+
+Update Layout found in `_layouts/Layout.svelte`
+
+```html
+<div>
+  <h1>I am layout Layout</h1>
+  <div>
+    <a href="/">Index</a>
+    <a href="/home.html">Home</a>
+    <a href="/about.html">About</a>
+    <a href="/contact.html">Contact</a>
+    <a href="/account/login.html">Login</a>
+    <a href="/account/signup.html">Signup</a>
+    <a href="/account/reset.html">Reset</a>
+  </div>
+  <slot></slot>
+</div>
 ```
 
 Generate the static site
@@ -53,8 +72,9 @@ View pages
 
 - [http://localhost:5000/](http://localhost:5000/)
 - [http://localhost:5000/index.html](http://localhost:5000/index.html)
-- [http://localhost:5000/main.html](http://localhost:5000/main.html)
+- [http://localhost:5000/home.html](http://localhost:5000/home.html)
 - [http://localhost:5000/about.html](http://localhost:5000/about.html)
+- [http://localhost:5000/contact.html](http://localhost:5000/contact.html)
 - [http://localhost:5000/account/login.html](http://localhost:5000/account/login.html)
 - [http://localhost:5000/account/signup.html](http://localhost:5000/account/signup.html)
 - [http://localhost:5000/account/reset.html](http://localhost:5000/account/reset.html)
