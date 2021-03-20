@@ -26,13 +26,23 @@ Add a script to package.json
 },
 ```
 
-Create some pages
+Create some pages pages without any layout
 
 ```bash
 npm run press-page -- -t Index
+```
+
+Create some pages with a layout
+
+```bash
 npm run press-page -- -t Home    -l Layout
 npm run press-page -- -t About   -l Layout
 npm run press-page -- -t Contact -l Layout
+```
+
+Create some pages in a directory
+
+```bash
 npm run press-page -- -t Login   -l Layout -p account
 npm run press-page -- -t Signup  -l Layout -p account
 npm run press-page -- -t Reset   -l Layout -p account
