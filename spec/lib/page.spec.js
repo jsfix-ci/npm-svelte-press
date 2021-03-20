@@ -25,6 +25,13 @@ describe("page", () => {
       );
       expect(lib._kebabCase("Where's the beef?")).toEqual("wheres-the-beef");
     });
+    it("should handle a dash phrase", () => {
+      const correct = "behind-the-scenes";
+      expect(lib._kebabCase("Behind-The-Scenes")).toEqual(correct);
+      expect(lib._kebabCase("Behind----The----Scenes")).toEqual(correct);
+      expect(lib._kebabCase("Behind ---- The ---- Scenes")).toEqual(correct);
+      expect(lib._kebabCase("-Behind-The-Scenes-")).toEqual(correct);
+    });
   }); // _kebabCase
 
   describe("_pascalCase", () => {
@@ -54,6 +61,13 @@ describe("page", () => {
     it("should handle a complex phrase", () => {
       const correct = "WheresTheBeef";
       expect(lib._pascalCase("Where's the beef?")).toEqual(correct);
+    });
+    it("should handle a dash phrase", () => {
+      const correct = "BehindTheScenes";
+      expect(lib._pascalCase("Behind-The-Scenes")).toEqual(correct);
+      expect(lib._pascalCase("Behind----The----Scenes")).toEqual(correct);
+      expect(lib._pascalCase("Behind ----  The ---- Scenes")).toEqual(correct);
+      expect(lib._pascalCase("-Behind-The-Scenes-")).toEqual(correct);
     });
   }); // _kebabCase
 }); // page
